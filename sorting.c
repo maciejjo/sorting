@@ -4,9 +4,10 @@
 #include <time.h>
 #include "functions.h"
 
+
 int main(int argc, char **argv) {
 	
-	int count = 20;
+	array_size = 20;
 	int display = 1;
 	int max_val = 30;
 
@@ -16,7 +17,7 @@ int main(int argc, char **argv) {
 		switch(c) {
 		case 'c':
 			printf("Generating %s elements.\n", optarg);
-			count = atoi(optarg);
+			array_size = atoi(optarg);
 			break;
 		case 'm': 
 			printf("Setting max value to %s.\n", optarg);
@@ -28,7 +29,7 @@ int main(int argc, char **argv) {
 			break;
 		case '?':
 		default:
-			printf("Usage: %s [-c count] [-m max_val] [-d]\n", argv[0]);
+			printf("Usage: %s [-c array_size] [-m max_val] [-d]\n", argv[0]);
 			return 1;
 
 		}
@@ -36,17 +37,27 @@ int main(int argc, char **argv) {
 
 	
 
-	int *numbers = return_array(count);
-	populate_array_with_random(numbers, count, max_val);
+	int *numbers = return_array(array_size);
+	populate_array_with_random(numbers, max_val);
+    print_array(numbers);
+    populate_array_with_ascending(numbers);
+    print_array(numbers);
+    populate_array_with_descending(numbers);
+    print_array(numbers);
+    populate_array_with_constant(numbers, 30);
+    print_array(numbers);
+    populate_array_with_v_shape(numbers);
+    print_array(numbers);
 
-	int *numbers_bubble = return_array_duplicate(numbers, count);
+
+	/*int *numbers_bubble = return_array_duplicate(numbers);
 	clock_t bubble_start = clock();
-	sort_bubble(numbers_bubble, count);
+	sort_bubble(numbers_bubble);
 	clock_t bubble_end = clock();
 	
-	int *numbers_select = return_array_duplicate(numbers, count);
+	int *numbers_select = return_array_duplicate(numbers);
 	clock_t select_start = clock();
-	sort_selection(numbers_select, count);
+	sort_selection(numbers_select);
 	clock_t select_end = clock();
 
 
@@ -55,19 +66,19 @@ int main(int argc, char **argv) {
 
 	if(display) {
 		printf("Unsorted numbers:\t");
-		print_array(numbers, count);
+		print_array(numbers);
 		printf("Selection sort:\t\t");
-		print_array(numbers_bubble, count);
+		print_array(numbers_bubble);
 		printf("Bubble sort:\t\t");
-		print_array(numbers_select, count);
+		print_array(numbers_select);
 	}
 
-	printf("Bubble run time for %d elements in range 1-%d is %.2f.\n", count, max_val, bubble_time);
-	printf("Select run time for %d elements in range 1-%d is %.2f.\n", count, max_val, select_time);
-
+	printf("Bubble run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, bubble_time);
+	printf("Select run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, select_time);
+*/
 	free(numbers);
-	free(numbers_bubble);
-	free(numbers_select);
+//	free(numbers_bubble);
+//	free(numbers_select);
 
 	
 }

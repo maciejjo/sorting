@@ -1,0 +1,31 @@
+algorytmy:
+    selection 
+    insertion
+    shell sort
+    heapsort
+
+dane:
+    ciąg rosnący
+    ciąg malejący
+    ciąg stały
+    dane losowe
+    dane V-kształtne
+
+4 wykresy, po 1 dla każdego algorytmu: dla każdych danych [czas od liczby
+elementów] 10 punktów pomiarowych
+
+5 wykresów po 1 dla każdych danych, te same punkty pomiarowe 
+
+uwaga: mogą być potrzebne inne przedziały dla różnych sortowań
+
+------------------------
+quicksort
+    rekurencyjnie
+    iteracyjnie
+
+klucz losowy i skrajny
+
+dane:
+    te sambe bez rosnącego
+
+    
