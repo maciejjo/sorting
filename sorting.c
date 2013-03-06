@@ -1,84 +1,49 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <time.h>
-#include "functions.h"
+#include "sorting.h"
+#include "main.h"
 
 
-int main(int argc, char **argv) {
-	
-	array_size = 20;
-	int display = 1;
-	int max_val = 30;
-
-	while(1) {
-		char c = getopt(argc, argv, "c:m:d");
-		if(c == -1) break;
-		switch(c) {
-		case 'c':
-			printf("Generating %s elements.\n", optarg);
-			array_size = atoi(optarg);
-			break;
-		case 'm': 
-			printf("Setting max value to %s.\n", optarg);
-			max_val = atoi(optarg);
-			break;
-		case 'd':
-			printf("Not displaying result.\n");
-			display = 0;
-			break;
-		case '?':
-		default:
-			printf("Usage: %s [-c array_size] [-m max_val] [-d]\n", argv[0]);
-			return 1;
-
+void sort_selection(int *tablica) {
+	int i, min, y;
+	for(i=0; i<array_size; i++) {
+		min = tablica[i];
+		for(y=i;y<array_size;y++) {
+			if(tablica[y] < min) {
+				min = tablica[y];
+				tablica[y] = tablica[i];
+				tablica[i] = min;
+			}
+			
 		}
 	}
-
-	
-    
-	int *numbers = return_array(array_size);
-	populate_array_with_random(numbers, max_val);
-	
-    int *numbers_bubble = return_array_duplicate(numbers);
-	clock_t bubble_start = clock();
-	sort_bubble(numbers_bubble);
-	clock_t bubble_end = clock();
-	
-	int *numbers_select = return_array_duplicate(numbers);
-	clock_t select_start = clock();
-	sort_selection(numbers_select);
-	clock_t select_end = clock();
-
-	int *numbers_insert = return_array_duplicate(numbers);
-	clock_t insert_start = clock();
-	sort_insertion(numbers_insert);
-	clock_t insert_end = clock();
-
-	float bubble_time = (float)(bubble_end - bubble_start) / CLOCKS_PER_SEC;
-	float select_time = (float)(select_end - select_start) / CLOCKS_PER_SEC;
-	float insert_time = (float)(insert_end - insert_start) / CLOCKS_PER_SEC;
-
-	if(display) {
-		printf("Unsorted numbers:\t");
-		print_array(numbers);
-		printf("Bubble sort:\t\t");
-		print_array(numbers_bubble);
-		printf("Selection sort:\t\t");
-		print_array(numbers_select);
-		printf("Insertion sort:\t\t");
-		print_array(numbers_insert);
-	}
-
-	printf("Bubble run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, bubble_time);
-	printf("Select run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, select_time);
-	printf("Insert run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, insert_time);
-
-	free(numbers);
-	free(numbers_bubble);
-	free(numbers_select);
-
 	
 }
-	
+
+void sort_bubble(int *tablica) {
+	int i, y, max=array_size, help;
+	for(i=0; i<array_size; i++) {
+		for(y=0; y<max-1; y++) {
+			if(tablica[y]>tablica[y+1]) {
+				help = tablica[y+1];
+				tablica[y+1] = tablica[y];
+				tablica[y] = help;
+			}}
+		max--;
+	}
+}
+
+void sort_insertion(int *tablica) {
+    int sorted = 1, helper = 0;
+    for(int i = 0; i < array_size-1; i++) {
+        if(tablica[sorted] < tablica[sorted-1]){
+            for(int y = 0; y < sorted; y++) {
+                if(tablica[sorted] < tablica[y]) {
+                    helper = tablica[sorted];
+                    tablica[sorted] = tablica[y];
+                    tablica[y] = helper;
+                }
+            }
+        }
+        sorted++;
+    }
+}
 

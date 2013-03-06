@@ -36,3 +36,7 @@ sorting
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# VIM swap files #
+##################
+*.swp
