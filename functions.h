@@ -4,6 +4,7 @@
 
 void sort_selection(int *tablica);
 void sort_bubble(int *tablica);
+void sort_insertion(int *tablica);
 
 
 int *return_array();

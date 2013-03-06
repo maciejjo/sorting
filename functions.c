@@ -3,7 +3,7 @@
 #include <time.h>
 #include "functions.h"
 
-int array_size = 20;
+int array_size;
 
 //===== FUNKCJE SORTUJĄCE =====
 void sort_selection(int *tablica) {
@@ -34,6 +34,22 @@ void sort_bubble(int *tablica) {
 		}
 		max--;
 	}
+}
+
+void sort_insertion(int *tablica) {
+    int sorted = 1, helper = 0;
+    for(int i = 0; i < array_size-1; i++) {
+        if(tablica[sorted] < tablica[sorted-1]){
+            for(int y = 0; y < sorted; y++) {
+                if(tablica[sorted] < tablica[y]) {
+                    helper = tablica[sorted];
+                    tablica[sorted] = tablica[y];
+                    tablica[y] = helper;
+                }
+            }
+        }
+        sorted++;
+    }
 }
 
 //============================
