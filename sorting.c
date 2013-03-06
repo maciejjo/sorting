@@ -39,18 +39,8 @@ int main(int argc, char **argv) {
 
 	int *numbers = return_array(array_size);
 	populate_array_with_random(numbers, max_val);
-    print_array(numbers);
-    populate_array_with_ascending(numbers);
-    print_array(numbers);
-    populate_array_with_descending(numbers);
-    print_array(numbers);
-    populate_array_with_constant(numbers, 30);
-    print_array(numbers);
-    populate_array_with_v_shape(numbers);
-    print_array(numbers);
 
-
-	/*int *numbers_bubble = return_array_duplicate(numbers);
+	int *numbers_bubble = return_array_duplicate(numbers);
 	clock_t bubble_start = clock();
 	sort_bubble(numbers_bubble);
 	clock_t bubble_end = clock();
@@ -75,10 +65,10 @@ int main(int argc, char **argv) {
 
 	printf("Bubble run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, bubble_time);
 	printf("Select run time for %d elements in range 1-%d is %.2f.\n", array_size, max_val, select_time);
-*/
+
 	free(numbers);
-//	free(numbers_bubble);
-//	free(numbers_select);
+	free(numbers_bubble);
+	free(numbers_select);
 
 	
 }

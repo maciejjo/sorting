@@ -88,7 +88,7 @@ void populate_array_with_v_shape(int *tablica) {
 void print_array(int *tablica) {
 	for(int i = 0; i < array_size; i++)
 	{
-		printf("%d\t", tablica[i]);
+		printf("%d ", tablica[i]);
 	}
 	printf("\n");
 }
