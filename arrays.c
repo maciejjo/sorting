@@ -17,10 +17,17 @@ int *return_array_duplicate(int *tablica) {
 	return rezultat;
 }
 
-void populate_array_with_random(int *tablica, int max_val) {
+void print_array(int *tablica) {
+	for(int i = 0; i < array_size; i++)
+	{
+		printf("%d ", tablica[i]);
+	}
+}
+
+void populate_array_with_random(int *tablica) {
 	srand(time(NULL));
 	for(int i = 0; i < array_size; i++) {	
-		tablica[i] = rand() % max_val;
+		tablica[i] = rand() % array_size;
 	}
 }
 
@@ -37,8 +44,9 @@ void populate_array_with_descending(int *tablica) {
     }
 }
 
-void populate_array_with_constant(int *tablica, int stala) {
-    for(int i = 0; i < array_size; i++) {
+void populate_array_with_constant(int *tablica ) {
+ int stala = array_size/2;
+ for(int i = 0; i < array_size; i++) {
         tablica[i] = stala;
     }
 }
@@ -51,11 +59,5 @@ void populate_array_with_v_shape(int *tablica) {
     }
 }
 
-void print_array(int *tablica) {
-	for(int i = 0; i < array_size; i++)
-	{
-		printf("%d ", tablica[i]);
-	}
-}
 
 //===============================

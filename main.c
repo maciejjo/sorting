@@ -18,29 +18,42 @@ int main(int argc, char **argv) {
     set_parameters(argc, argv);
 
 	int *numbers = return_array(array_size);
-	populate_array_with_random(numbers, rand_max_val);
+
+    struct dataset_function *dataset_array[] = {
+        init_dataset(populate_array_with_random, "Random"),
+        init_dataset(populate_array_with_ascending, "Ascending"),
+        init_dataset(populate_array_with_ascending, "Descending"),
+        init_dataset(populate_array_with_constant, "Constant"),
+        init_dataset(populate_array_with_v_shape, "V-shaped")
+    };
 
     struct sorting_function *sorting_array[] = {
-        init(sort_bubble, "Bubble sort"),
-        init(sort_selection, "Selection sort"),
-        init(sort_insertion, "Insertion sort"),
-        init(sort_shell, "Shell sort")
-        };
+        init_sorting(sort_bubble, "Bubble sort"),
+        init_sorting(sort_selection, "Selection sort"),
+        init_sorting(sort_insertion, "Insertion sort"),
+        init_sorting(sort_shell, "Shell sort")
+     };
 
     int sorting_array_size = sizeof(sorting_array)/sizeof(sorting_array[0]);
+    int dataset_array_size = sizeof(dataset_array)/sizeof(dataset_array[0]);
+
+for(int y = 0; y<dataset_array_size; y++) {
+    printf("======>current dataset: %s\n", dataset_array[y]->name);
+    dataset_array[y]->function(numbers);
 
     for(int i =0; i<sorting_array_size; i++) {
         sorting_array[i]->numbers = return_array_duplicate(numbers);
-        printf("\n---->%s\n", sorting_array[i]->name);
+        printf("\n\t====>%s\n", sorting_array[i]->name);
         measure_sort_runtime(sorting_array[i]);
         if(display) {
-            printf("Elements: ");
+            printf("\tElements: ");
 		    print_array(sorting_array[i]->numbers);
             printf("\n");
         }
-        printf("Running time: %.2f\n", sorting_array[i]->runtime);
+        printf("\tRunning time: %.2f\n", sorting_array[i]->runtime);
         
     }
+}
     
     for(int i =0; i<sorting_array_size; i++) {
         free(sorting_array[i]);

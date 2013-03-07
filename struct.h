@@ -10,7 +10,15 @@ struct sorting_function {
     float runtime;
 };
 
-struct sorting_function* init(void (*init_function) (int *), char *name_string);
+struct dataset_function {
+    void (* function) (int *);
+    char *name;
+};
+
+
+struct sorting_function* init_sorting(void (*init_function) (int *), char *name_string);
 void measure_sort_runtime(struct sorting_function* function_to_measure);
+
+struct dataset_function* init_dataset(void (*init_function) (int *), char *name_string);
 
 #endif
