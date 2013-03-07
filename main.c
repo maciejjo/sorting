@@ -6,6 +6,7 @@
 #include "parameters.h"
 #include "arrays.h"
 #include "main.h"
+#include "struct.h"
 
 
 int array_size = 20;
@@ -13,17 +14,19 @@ int display = 1;
 int rand_max_val = 30;
 
 int main(int argc, char **argv) {
-	
+
 
     set_parameters(argc, argv);
     	
-    
+    struct sorting_function *bubble = init(sort_bubble);
+
 	int *numbers = return_array(array_size);
 	populate_array_with_random(numbers, rand_max_val);
 	
     int *numbers_bubble = return_array_duplicate(numbers);
 	clock_t bubble_start = clock();
-	sort_bubble(numbers_bubble);
+	//sort_bubble(numbers_bubble);
+    bubble->function(numbers_bubble);
 	clock_t bubble_end = clock();
 	
 	int *numbers_select = return_array_duplicate(numbers);
