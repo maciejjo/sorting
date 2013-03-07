@@ -3,6 +3,19 @@
 #include "main.h"
 
 
+void sort_bubble(int *tablica) {
+	int i, y, max=array_size, help;
+	for(i=0; i<array_size; i++) {
+		for(y=0; y<max-1; y++) {
+			if(tablica[y]>tablica[y+1]) {
+				help = tablica[y+1];
+				tablica[y+1] = tablica[y];
+				tablica[y] = help;
+			}}
+		max--;
+	}
+}
+
 void sort_selection(int *tablica) {
 	int i, min, y;
 	for(i=0; i<array_size; i++) {
@@ -17,19 +30,6 @@ void sort_selection(int *tablica) {
 		}
 	}
 	
-}
-
-void sort_bubble(int *tablica) {
-	int i, y, max=array_size, help;
-	for(i=0; i<array_size; i++) {
-		for(y=0; y<max-1; y++) {
-			if(tablica[y]>tablica[y+1]) {
-				help = tablica[y+1];
-				tablica[y+1] = tablica[y];
-				tablica[y] = help;
-			}}
-		max--;
-	}
 }
 
 void sort_insertion(int *tablica) {

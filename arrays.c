@@ -56,7 +56,6 @@ void print_array(int *tablica) {
 	{
 		printf("%d ", tablica[i]);
 	}
-	printf("\n");
 }
 
 //===============================

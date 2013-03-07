@@ -15,53 +15,37 @@ int rand_max_val = 30;
 
 int main(int argc, char **argv) {
 
-
     set_parameters(argc, argv);
-    	
-    struct sorting_function *bubble = init(sort_bubble);
 
 	int *numbers = return_array(array_size);
 	populate_array_with_random(numbers, rand_max_val);
-	
-    int *numbers_bubble = return_array_duplicate(numbers);
-	clock_t bubble_start = clock();
-	//sort_bubble(numbers_bubble);
-    bubble->function(numbers_bubble);
-	clock_t bubble_end = clock();
-	
-	int *numbers_select = return_array_duplicate(numbers);
-	clock_t select_start = clock();
-	sort_selection(numbers_select);
-	clock_t select_end = clock();
 
-	int *numbers_insert = return_array_duplicate(numbers);
-	clock_t insert_start = clock();
-	sort_insertion(numbers_insert);
-	clock_t insert_end = clock();
+    struct sorting_function *sorting_array[] = {
+        init(sort_bubble, "Bubble sort"),
+        init(sort_selection, "Selection sort"),
+        init(sort_insertion, "Insertion sort")
+        };
 
-	float bubble_time = (float)(bubble_end - bubble_start) / CLOCKS_PER_SEC;
-	float select_time = (float)(select_end - select_start) / CLOCKS_PER_SEC;
-	float insert_time = (float)(insert_end - insert_start) / CLOCKS_PER_SEC;
+    int sorting_array_size = sizeof(sorting_array)/sizeof(sorting_array[0]);
 
-	if(display) {
-		printf("Unsorted numbers:\t");
-		print_array(numbers);
-		printf("Bubble sort:\t\t");
-		print_array(numbers_bubble);
-		printf("Selection sort:\t\t");
-		print_array(numbers_select);
-		printf("Insertion sort:\t\t");
-		print_array(numbers_insert);
-	}
+    for(int i =0; i<sorting_array_size; i++) {
+        sorting_array[i]->numbers = return_array_duplicate(numbers);
+        printf("\n---->%s\n", sorting_array[i]->name);
+        measure_sort_runtime(sorting_array[i]);
+        if(display) {
+            printf("Elements: ");
+		    print_array(sorting_array[i]->numbers);
+            printf("\n");
+        }
+        printf("Running time: %.2f\n", sorting_array[i]->runtime);
+        
+    }
+    
+    for(int i =0; i<sorting_array_size; i++) {
+        free(sorting_array[i]);
+    }
 
-	printf("Bubble run time for %d elements in range 1-%d is %.2f.\n", array_size, rand_max_val, bubble_time);
-	printf("Select run time for %d elements in range 1-%d is %.2f.\n", array_size, rand_max_val, select_time);
-	printf("Insert run time for %d elements in range 1-%d is %.2f.\n", array_size, rand_max_val, insert_time);
-
-	free(numbers);
-	free(numbers_bubble);
-	free(numbers_select);
-
+    free(numbers);
 	
 }
 	
