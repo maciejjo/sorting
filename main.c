@@ -23,7 +23,8 @@ int main(int argc, char **argv) {
     struct sorting_function *sorting_array[] = {
         init(sort_bubble, "Bubble sort"),
         init(sort_selection, "Selection sort"),
-        init(sort_insertion, "Insertion sort")
+        init(sort_insertion, "Insertion sort"),
+        init(sort_shell, "Shell sort")
         };
 
     int sorting_array_size = sizeof(sorting_array)/sizeof(sorting_array[0]);

@@ -48,3 +48,17 @@ void sort_insertion(int *tablica) {
     }
 }
 
+void sort_shell(int *tablica) {
+    int h, i, j, k;
+    for (h = array_size; h /= 2;) {
+        for (i = h; i < array_size; i++) {
+            k = tablica[i];
+            for (j = i; j >= h && k < tablica[j - h]; j -= h) {
+                tablica[j] = tablica[j - h];
+            }
+            tablica[j] = k;
+        }
+    }
+}
+
+
