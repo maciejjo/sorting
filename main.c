@@ -28,9 +28,9 @@ int main(int argc, char **argv) {
     };
 
     struct sorting_function *sorting_array[] = {
-        init_sorting(sort_bubble, "Bubble sort"),
+/*        init_sorting(sort_bubble, "Bubble sort"),
         init_sorting(sort_selection, "Selection sort"),
-        init_sorting(sort_insertion, "Insertion sort"),
+        init_sorting(sort_insertion, "Insertion sort"),*/
         init_sorting(sort_shell, "Shell sort")
      };
 
@@ -50,15 +50,11 @@ for(int y = 0; y<dataset_array_size; y++) {
 		    print_array(sorting_array[i]->numbers);
             printf("\n");
         }
+        free(sorting_array[i]);
         printf("\tRunning time: %.2f\n", sorting_array[i]->runtime);
         
     }
 }
-    
-    for(int i =0; i<sorting_array_size; i++) {
-        free(sorting_array[i]);
-    }
-
     free(numbers);
 	
 }
