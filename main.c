@@ -50,8 +50,8 @@ for(int y = 0; y<dataset_array_size; y++) {
 		    print_array(sorting_array[i]->numbers);
             printf("\n");
         }
-        free(sorting_array[i]);
         printf("\tRunning time: %.2f\n", sorting_array[i]->runtime);
+        free(sorting_array[i]->numbers);
         
     }
 }
