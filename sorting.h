@@ -6,7 +6,8 @@ void sort_selection(int *tablica);
 void sort_bubble(int *tablica);
 void sort_insertion(int *tablica);
 void sort_shell(int *tablica);
-    
+
+extern int rand_max_val;
 
 #endif
 

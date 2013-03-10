@@ -6,7 +6,7 @@
 
 void set_parameters(int argc, char **argv) {
 	while(1) {
-		char c = getopt(argc, argv, "c:m:d");
+		char c = getopt(argc, argv, "c:m:do:");
 		if(c == -1) break;
 		switch(c) {
 		case 'c':
@@ -21,9 +21,14 @@ void set_parameters(int argc, char **argv) {
 			printf("Not displaying result.\n");
 			display = 0;
 			break;
+        case 'o':
+            printf("Writing output to file %s\n", optarg);
+            write_to_file = 1;
+            filename = optarg;
+            break;
 		case '?':
 		default:
-			printf("Usage: %s [-c array_size] [-m max_val] [-d]\n", argv[0]);
+			printf("Usage: %s [-c array_size] [-m max_val] [-o filename] [-d] \n", argv[0]);
 
 		}
 	}
