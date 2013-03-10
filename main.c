@@ -13,6 +13,8 @@
 int array_size = 20;
 int display = 1;
 int rand_max_val = 0;
+int number_of_tests = 1;
+int test_step = 0;
 char *filename = "";
 int write_to_file = 0;
 
@@ -20,7 +22,6 @@ int main(int argc, char **argv) {
 
     set_parameters(argc, argv);
 
-	int *numbers = return_array();
 
     struct dataset_function *dataset_array[] = {
         init_dataset(populate_array_with_random, "Random"),
@@ -48,32 +49,34 @@ int main(int argc, char **argv) {
             file_opened = 1;
         }
     }
+for(int k = 0; k<number_of_tests; k++) {
+	int *numbers = return_array();
+    for(int j = 0; j<dataset_array_size; j++) {
+        printf("|------------current dataset: %s\n", dataset_array[j]->name);
+        dataset_array[j]->function(numbers);
 
-for(int y = 0; y<dataset_array_size; y++) {
-    printf("|------------current dataset: %s\n", dataset_array[y]->name);
-    dataset_array[y]->function(numbers);
-
-    for(int i =0; i<sorting_array_size; i++) {
-        sorting_array[i]->numbers = return_array_duplicate(numbers);
-        printf("|--%s ", sorting_array[i]->name);
-        measure_sort_runtime(sorting_array[i]);
-        printf("Running time: %.2f\n", sorting_array[i]->runtime);
-        if(write_to_file) {
-            fprintf(output_file, "\"%s\",\"%s\",\"%d\",\"%.2f\"\n", dataset_array[y]->name,
-            sorting_array[i]->name, array_size, sorting_array[i]->runtime);
-        } 
-        if(display) {
-            printf("|-- Elements: ");
-		    print_array(sorting_array[i]->numbers);
-            printf("\n");
+        for(int i =0; i<sorting_array_size; i++) {
+            sorting_array[i]->numbers = return_array_duplicate(numbers);
+            printf("|--%s ", sorting_array[i]->name);
+            measure_sort_runtime(sorting_array[i]);
+            printf("Running time: %.2f\n", sorting_array[i]->runtime);
+            if(write_to_file) {
+                fprintf(output_file, "%s,%s,%d,%.2f\n", dataset_array[j]->name,
+                sorting_array[i]->name, array_size, sorting_array[i]->runtime);
+            } 
+            if(display) {
+                printf("|-- Elements: ");
+                print_array(sorting_array[i]->numbers);
+                printf("\n");
+            }
+            free(sorting_array[i]->numbers);
+            
         }
-        free(sorting_array[i]->numbers);
-        
     }
-}
+    array_size += test_step;
     free(numbers);
+}
     if(file_opened) fclose(output_file);
-	
 }
 	
 
