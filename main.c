@@ -32,16 +32,18 @@ int main(int argc, char **argv) {
     };
 
     struct sorting_function *sorting_array[] = {
-        init_sorting(sort_bubble, "Bubble sort"),
-        init_sorting(sort_selection, "Selection sort"),
-        init_sorting(sort_insertion, "Insertion sort"),
-        init_sorting(sort_shell, "Shell sort")
+//        init_sorting(sort_bubble, "Bubble sort"),
+//        init_sorting(sort_selection, "Selection sort"),
+//        init_sorting(sort_insertion, "Insertion sort"),
+        init_sorting(sort_shell, "Shell sort"),
+	init_sorting(sort_heap, "Heap sort"),
+	init_sorting(sort_quick, "Quick sort")
      };
 
     int sorting_array_size = sizeof(sorting_array)/sizeof(sorting_array[0]);
     int dataset_array_size = sizeof(dataset_array)/sizeof(dataset_array[0]);
     
-    FILE *output_file;
+    FILE *output_file = NULL;
     int file_opened = 0;
     if(write_to_file) {
         if(strcmp(filename, "") != 0) {
