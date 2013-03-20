@@ -74,114 +74,41 @@ void sort_shell(int *tablica) {
       unsigned int n = array_size, i = n/2, parent, child;
       int t;
   
-      while(1) { /* Loops until tablica is sorted */
-          if (i > 0) { /* First stage - Sorting the heap */
-              i--;           /* Save its index to i */
-              t = tablica[i];    /* Save parent value to t */
-          } else {     /* Second stage - Extracting elements in-place */
-              n--;           /* Make the new heap smaller */
-              if (n == 0) return; /* When the heap is empty, we are done */
-              t = tablica[n];    /* Save last value (it will be overwritten) */
-              tablica[n] = tablica[0]; /* Save largest value at the end of tablica */
+      while(1) { 
+          if (i > 0) { 
+              i--;        
+              t = tablica[i]; 
+          } else {   
+              n--;  
+              if (n == 0) return; 
+              t = tablica[n];    
+              tablica[n] = tablica[0]; 
           }
   
-          parent = i; /* We will start pushing down t from parent */
-          child = i*2 + 1; /* parent's left child */
+          parent = i; 
+          child = i*2 + 1; 
   
-          /* Sift operation - pushing the value of t down the heap */
+
           while (child < n) {
               if (child + 1 < n  &&  tablica[child + 1] > tablica[child]) {
-                  child++; /* Choose the largest child */
+                  child++; 
               }
-              if (tablica[child] > t) { /* If any child is bigger than the parent */
-                  tablica[parent] = tablica[child]; /* Move the largest child up */
-                  parent = child; /* Move parent pointer to this child */
-                  //child = parent*2-1; /* Find the next child */
-                  child = parent*2+1; /* the previous line is wrong*/
+              if (tablica[child] > t) {
+                  tablica[parent] = tablica[child];
+                  parent = child;
+                 
+                  child = parent*2+1; 
               } else {
-                  break; /* t's place is found */
+                  break; 
               }
           }
-          tablica[parent] = t; /* We save t in the heap */
+          tablica[parent] = t; 
       }
   }
 
 void sort_quick_recursive_random_start(int *tablica) {
 	sort_quick_recursive_random(tablica, 0, array_size - 1);
 }
-
-/*void sort_quick_recursive ( int a[ ], int lower, int upper )
-{
-	int i ;
-	if ( upper > lower )
-	{
-		i = split ( a, lower, upper ) ;
-		sort_quick_recursive ( a, lower, i - 1 ) ;
-		sort_quick_recursive ( a, i + 1, upper ) ;
-	}
-}
-
-int split ( int a[ ], int lower, int upper )
-{
-	int i, p, q, t ;
-
-	p = lower + 1 ;
-	q = upper ;
-	i = a[lower] ;
-
-	while ( q >= p )
-	{
-		while ( a[p] < i )
-			p++ ;
-
-		while ( a[q] > i )
-			q-- ;
-
-		if ( q > p )
-		{
-			t = a[p] ;
-			a[p] = a[q] ;
-			a[q] = t ;
-		}
-	}
-
-	t = a[lower] ;
-	a[lower] = a[q] ;
-	a[q] = t ;
-
-	return q ;
-}
-
-void sort_quick_recursive(int a[], int lo, int hi) 
-{
-  int h, l, p, t;
-
-  if (lo < hi) {
-    l = lo;
-    h = hi;
-    srand(time(NULL));          
-    p = a[rand() % (hi-lo)+lo];
-//    p = a[hi];
-
-    do {
-      while ((l < h) && (a[l] <= p)) 
-          l = l+1;
-      while ((h > l) && (a[h] >= p))
-          h = h-1;
-      if (l < h) {
-          t = a[l];
-          a[l] = a[h];
-          a[h] = t;
-      }
-    } while (l < h);
-
-    a[hi] = a[l];
-    a[l] = p;
-
-    sort_quick_recursive( a, lo, l-1 );
-    sort_quick_recursive( a, l+1, hi );
-  }
-}*/
 
 int random_partition(int* arr, int start, int end)
 {
@@ -230,7 +157,6 @@ void sort_quick_recursive_rightmost_start(int *tablica) {
 
 int rightmost_partition(int* arr, int start, int end)
 {
-    srand(time(NULL));
     int t;
 
     int pivotIdx = end;
@@ -300,6 +226,72 @@ void sort_quick_iterative_rightmost(int *tablica)
         
         /* cache our pivot value */
         pivot = tablica[array_size-1];
+        
+        i = lo;
+        k = hi;
+        
+        do {
+            /* find the first element with a value >= pivot value */
+            while (i < k && tablica[i] < pivot)
+                i++;
+            
+            /* find the last element with a value <= pivot value */
+            while (k > i && tablica[k] > pivot)
+                k--;
+            
+            if (i <= k) {
+                SWAP (i, k);
+                i++;
+                k--;
+            } else {
+                break;
+            }
+        } while (1);
+        
+        if (lo < k) {
+            /* push the first partition onto our stack */
+            sp->lo = lo;
+            sp->hi = k;
+            sp++;
+        }
+        
+        if (i < hi) {
+            /* push the second partition onto our stack */
+            sp->lo = i;
+            sp->hi = hi;
+            sp++;
+        }
+    } while (sp > stack);
+}
+
+void sort_quick_iterative_random(int *tablica)
+{
+    size_t n = (size_t) array_size;
+    qstack_t stack[32], *sp;
+    register size_t i, k;
+    register int pivot;
+    size_t lo, hi;
+    int tmp;
+    
+    /* initialize our stack */
+    sp = stack;
+    sp->hi = n - 1;
+    sp->lo = 0;
+    sp++;
+    
+    do {
+        /* pop our lo and hi indexes off the stack */
+        sp--;
+        lo = sp->lo;
+        hi = sp->hi;
+        
+        if ((hi - lo) < 1)
+            continue;
+        
+        /* cache our pivot value */
+    	srand(time(NULL));
+    	int pivotIdx =  lo + rand() % (hi-lo+1);
+        pivot = tablica[pivotIdx];
         
         i = lo;
         k = hi;

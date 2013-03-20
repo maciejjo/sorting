@@ -2,9 +2,11 @@
 
 import matplotlib.pyplot as plt
 import csv
+from matplotlib.backends.backend_pdf import PdfPages
+pp = PdfPages('sortings_qs.pdf')
 datasets = ["Random", "Ascending", "Descending", "Constant", "V-shaped"]
 for dataset in datasets:
-	with open('wyniki.csv') as csvfile:
+	with open('qs.csv') as csvfile:
 		reader = csv.reader(csvfile)
 		select_count = []
 		select_times = []
@@ -46,6 +48,8 @@ for dataset in datasets:
 	plt.ylabel('Time in seconds')
 	plt.xlabel('Number of elements')
 	plt.grid(True)
-	plt.savefig('wykres' + dataset + '.png')
+	pp.savefig()
 	plt.clf()
+
+pp.close()
 			

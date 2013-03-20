@@ -2,6 +2,8 @@
 
 import matplotlib.pyplot as plt
 import csv
+from matplotlib.backends.backend_pdf import PdfPages
+pp = PdfPages('datasets.pdf')
 sortings = ["Selection", "Insertion", "Shell", "Heap"]
 
 for sorting in sortings:
@@ -58,6 +60,7 @@ for sorting in sortings:
 	plt.ylabel('Time in seconds')
 	plt.xlabel('Number of elements')
 	plt.grid(True)
-	plt.savefig('wykres' + sorting + '.png')
+	pp.savefig()
 	plt.clf()
+pp.close()
 			

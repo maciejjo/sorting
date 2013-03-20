@@ -39,7 +39,8 @@ int main(int argc, char **argv) {
 //	init_sorting(sort_heap, "Heap sort"),
 	init_sorting(sort_quick_recursive_random_start, "Qsort recursive random"),
 	init_sorting(sort_quick_recursive_rightmost_start, "Qsort recursive right"),
-	init_sorting(sort_quick_iterative_rightmost, "Qsort iterative right")
+//	init_sorting(sort_quick_iterative_rightmost, "Qsort iterative right"),
+//	init_sorting(sort_quick_iterative_random, "Qsort iterative random")
      };
 
     int sorting_array_size = sizeof(sorting_array)/sizeof(sorting_array[0]);

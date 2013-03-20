@@ -14,6 +14,7 @@ void sort_quick_recursive_rightmost_start(int *tablica);
 int rightmost_partition(int* arr, int start, int end);
 void sort_quick_recursive_rightmost(int* arr, int start, int end);
 void sort_quick_iterative_rightmost(int *tablica);
+void sort_quick_iterative_random(int *tablica);
 extern int rand_max_val;
 
 #endif
