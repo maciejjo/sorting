@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include "sorting.h"
 #include "main.h"
-
+#define MID(lo, hi) (lo + ((hi - lo) >> 1))
+#define SWAP(a, b) tmp = tablica[a], tablica[a] = tablica[b], tablica[b] = tmp
 
 void sort_bubble(int *tablica) {
 	register int i, y, max=array_size, tmp;
@@ -103,22 +105,235 @@ void sort_shell(int *tablica) {
           tablica[parent] = t; /* We save t in the heap */
       }
   }
-void sort_quick(int *tablica) {
 
-  #define  MAX_LEVELS  1000
+void sort_quick_recursive_random_start(int *tablica) {
+	sort_quick_recursive_random(tablica, 0, array_size - 1);
+}
 
-  int  piv, beg[MAX_LEVELS], end[MAX_LEVELS], i=0, L, R ;
+/*void sort_quick_recursive ( int a[ ], int lower, int upper )
+{
+	int i ;
+	if ( upper > lower )
+	{
+		i = split ( a, lower, upper ) ;
+		sort_quick_recursive ( a, lower, i - 1 ) ;
+		sort_quick_recursive ( a, i + 1, upper ) ;
+	}
+}
 
-  beg[0]=0; end[0]=array_size;
-  while (i>=0) {
-    L=beg[i]; R=end[i]-1;
-    if (L<R) {
-      piv=tablica[L]; 
-      while (L<R) {
-        while (tablica[R]>=piv && L<R) R--; if (L<R) tablica[L++]=tablica[R];
-        while (tablica[L]<=piv && L<R) L++; if (L<R) tablica[R--]=tablica[L]; }
-      tablica[L]=piv; beg[i+1]=L+1; end[i+1]=end[i]; end[i++]=L; }
-    else {
-      i--; }
- } 
+int split ( int a[ ], int lower, int upper )
+{
+	int i, p, q, t ;
+
+	p = lower + 1 ;
+	q = upper ;
+	i = a[lower] ;
+
+	while ( q >= p )
+	{
+		while ( a[p] < i )
+			p++ ;
+
+		while ( a[q] > i )
+			q-- ;
+
+		if ( q > p )
+		{
+			t = a[p] ;
+			a[p] = a[q] ;
+			a[q] = t ;
+		}
+	}
+
+	t = a[lower] ;
+	a[lower] = a[q] ;
+	a[q] = t ;
+
+	return q ;
+}
+
+void sort_quick_recursive(int a[], int lo, int hi) 
+{
+  int h, l, p, t;
+
+  if (lo < hi) {
+    l = lo;
+    h = hi;
+    srand(time(NULL));          
+    p = a[rand() % (hi-lo)+lo];
+//    p = a[hi];
+
+    do {
+      while ((l < h) && (a[l] <= p)) 
+          l = l+1;
+      while ((h > l) && (a[h] >= p))
+          h = h-1;
+      if (l < h) {
+          t = a[l];
+          a[l] = a[h];
+          a[h] = t;
+      }
+    } while (l < h);
+
+    a[hi] = a[l];
+    a[l] = p;
+
+    sort_quick_recursive( a, lo, l-1 );
+    sort_quick_recursive( a, l+1, hi );
+  }
+}*/
+
+int random_partition(int* arr, int start, int end)
+{
+    srand(time(NULL));
+    int t;
+
+    int pivotIdx = start + rand() % (end-start+1);
+    int pivot = arr[pivotIdx];
+    
+    t = arr[pivotIdx];
+    arr[pivotIdx] = arr[end];
+    arr[end] = t;
+    pivotIdx = end;
+    int i = start -1;
+ 
+    for(int j=start; j<=end-1; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i = i+1;
+	    t = arr[i];
+	    arr[i] = arr[j];
+	    arr[j] = t;
+        }
+    }
+ 
+    t = arr[i+1];
+    arr[i+1] = arr[pivotIdx];
+    arr[pivotIdx] = t;
+    return i+1;
+}
+ 
+void sort_quick_recursive_random(int* arr, int start, int end)
+{
+    if(start < end) {
+        int mid = random_partition(arr, start, end);
+        sort_quick_recursive_random(arr, start, mid-1);
+        sort_quick_recursive_random(arr, mid+1, end);
+    }
+}
+
+
+void sort_quick_recursive_rightmost_start(int *tablica) {
+	sort_quick_recursive_rightmost(tablica, -1, array_size - 1);
+}
+
+int rightmost_partition(int* arr, int start, int end)
+{
+    srand(time(NULL));
+    int t;
+
+    int pivotIdx = end;
+    int pivot = arr[pivotIdx];
+    
+    t = arr[pivotIdx];
+    arr[pivotIdx] = arr[end];
+    arr[end] = t;
+    pivotIdx = end;
+    int i = start -1;
+ 
+    for(int j=start; j<=end-1; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i = i+1;
+	    t = arr[i];
+	    arr[i] = arr[j];
+	    arr[j] = t;
+        }
+    }
+ 
+    t = arr[i+1];
+    arr[i+1] = arr[pivotIdx];
+    arr[pivotIdx] = t;
+    return i+1;
+}
+
+
+void sort_quick_recursive_rightmost(int* arr, int start, int end)
+{
+    if(start < end) {
+        int mid = rightmost_partition(arr, start, end);
+        sort_quick_recursive_rightmost(arr, start, mid-1);
+        sort_quick_recursive_rightmost(arr, mid+1, end);
+    }
+}
+
+
+typedef struct qstack {
+    size_t lo, hi;
+} qstack_t;
+
+void sort_quick_iterative_rightmost(int *tablica)
+{
+    size_t n = (size_t) array_size;
+    qstack_t stack[32], *sp;
+    register size_t i, k;
+    register int pivot;
+    size_t lo, hi;
+    int tmp;
+    
+    /* initialize our stack */
+    sp = stack;
+    sp->hi = n - 1;
+    sp->lo = 0;
+    sp++;
+    
+    do {
+        /* pop our lo and hi indexes off the stack */
+        sp--;
+        lo = sp->lo;
+        hi = sp->hi;
+        
+        if ((hi - lo) < 1)
+            continue;
+        
+        /* cache our pivot value */
+        pivot = tablica[array_size-1];
+        
+        i = lo;
+        k = hi;
+        
+        do {
+            /* find the first element with a value >= pivot value */
+            while (i < k && tablica[i] < pivot)
+                i++;
+            
+            /* find the last element with a value <= pivot value */
+            while (k > i && tablica[k] > pivot)
+                k--;
+            
+            if (i <= k) {
+                SWAP (i, k);
+                i++;
+                k--;
+            } else {
+                break;
+            }
+        } while (1);
+        
+        if (lo < k) {
+            /* push the first partition onto our stack */
+            sp->lo = lo;
+            sp->hi = k;
+            sp++;
+        }
+        
+        if (i < hi) {
+            /* push the second partition onto our stack */
+            sp->lo = i;
+            sp->hi = hi;
+            sp++;
+        }
+    } while (sp > stack);
 }

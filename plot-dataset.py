@@ -57,6 +57,7 @@ for sorting in sortings:
 	plt.legend(loc='upper left')
 	plt.ylabel('Time in seconds')
 	plt.xlabel('Number of elements')
+	plt.grid(True)
 	plt.savefig('wykres' + sorting + '.png')
 	plt.clf()
 			

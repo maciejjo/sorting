@@ -45,6 +45,7 @@ for dataset in datasets:
 	plt.legend(loc='upper right')
 	plt.ylabel('Time in seconds')
 	plt.xlabel('Number of elements')
+	plt.grid(True)
 	plt.savefig('wykres' + dataset + '.png')
 	plt.clf()
 			

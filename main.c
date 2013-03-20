@@ -25,19 +25,21 @@ int main(int argc, char **argv) {
 
     struct dataset_function *dataset_array[] = {
         init_dataset(populate_array_with_random, "Random"),
-        init_dataset(populate_array_with_ascending, "Ascending"),
+//        init_dataset(populate_array_with_ascending, "Ascending"),
         init_dataset(populate_array_with_ascending, "Descending"),
         init_dataset(populate_array_with_constant, "Constant"),
         init_dataset(populate_array_with_v_shape, "V-shaped")
-    };
+   };
 
     struct sorting_function *sorting_array[] = {
 //        init_sorting(sort_bubble, "Bubble sort"),
 //        init_sorting(sort_selection, "Selection sort"),
 //        init_sorting(sort_insertion, "Insertion sort"),
-        init_sorting(sort_shell, "Shell sort"),
-	init_sorting(sort_heap, "Heap sort"),
-	init_sorting(sort_quick, "Quick sort")
+//        init_sorting(sort_shell, "Shell sort"),
+//	init_sorting(sort_heap, "Heap sort"),
+	init_sorting(sort_quick_recursive_random_start, "Qsort recursive random"),
+	init_sorting(sort_quick_recursive_rightmost_start, "Qsort recursive right"),
+	init_sorting(sort_quick_iterative_rightmost, "Qsort iterative right")
      };
 
     int sorting_array_size = sizeof(sorting_array)/sizeof(sorting_array[0]);
@@ -51,12 +53,12 @@ int main(int argc, char **argv) {
             file_opened = 1;
         }
     }
+    
 for(int k = 0; k<number_of_tests; k++) {
 	int *numbers = return_array();
     for(int j = 0; j<dataset_array_size; j++) {
         printf("|------------current dataset: %s\n", dataset_array[j]->name);
         dataset_array[j]->function(numbers);
-
         for(int i =0; i<sorting_array_size; i++) {
             sorting_array[i]->numbers = return_array_duplicate(numbers);
             printf("|--%s ", sorting_array[i]->name);
