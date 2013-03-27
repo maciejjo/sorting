@@ -72,43 +72,6 @@ void sort_shell(int *tablica) {
         }
     }
 }
-/*
-  void sort_heap(int *tablica)
-  {
-      unsigned int n = array_size, i = n/2, parent, child;
-      int t;
-  
-      while(1) { 
-          if (i > 0) { 
-              i--;        
-              t = tablica[i]; 
-          } else {   
-              n--;  
-              if (n == 0) return; 
-              t = tablica[n];    
-              tablica[n] = tablica[0]; 
-          }
-  
-          parent = i; 
-          child = i*2 + 1; 
-  
-
-          while (child < n) {
-              if (child + 1 < n  &&  tablica[child + 1] > tablica[child]) {
-                  child++; 
-              }
-              if (tablica[child] > t) {
-                  tablica[parent] = tablica[child];
-                  parent = child;
-                 
-                  child = parent*2+1; 
-              } else {
-                  break; 
-              }
-          }
-          tablica[parent] = t; 
-      }
-  }*/
 
 #define LEFT(i) ((i) * 2 + 1)
 #define RIGHT(i) ((i) * 2 + 2)
@@ -127,7 +90,7 @@ void sort_heap(int *tablica) {
   for (int i = array_size / 2; i >= 0; i--)
     heapify(tablica, i, array_size);
 
-  for (int i = array_size - 1; i > 0; i--) {
+  for (int i = array_size - 1; i >= 0; i--) {
     swap(tablica, tablica + i);
     heapify(tablica, 0, i - 1);
   }
