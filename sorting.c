@@ -111,7 +111,6 @@ void sort_quick_rightmost_recursive(int *tab, int first,int last)
          while(tab[i]<key)
             i++;
          while(key<tab[j])
-         while(key<tab[j])
             j--;
          if(i<j)
          {
@@ -140,7 +139,6 @@ void sort_quick_random_recursive(int *tab, int first,int last)
      {
          while(tab[i]<key)
             i++;
-         while(key<tab[j])
          while(key<tab[j])
             j--;
          if(i<j)
