@@ -25,20 +25,23 @@ int main(int argc, char **argv) {
 
     struct dataset_function *dataset_array[] = {
         init_dataset(populate_array_with_random, "Random"),
-//        init_dataset(populate_array_with_ascending, "Ascending"),
-        init_dataset(populate_array_with_ascending, "Descending"),
+        init_dataset(populate_array_with_ascending, "Ascending"),
+       init_dataset(populate_array_with_descending, "Descending"),
         init_dataset(populate_array_with_constant, "Constant"),
         init_dataset(populate_array_with_v_shape, "V-shaped")
    };
 
     struct sorting_function *sorting_array[] = {
 //        init_sorting(sort_bubble, "Bubble sort"),
-//        init_sorting(sort_selection, "Selection sort"),
-//        init_sorting(sort_insertion, "Insertion sort"),
+//	init_sorting(sort_selection, "Selection sort"),
+//	init_sorting(sort_insertion, "Insertion sort"),
 //        init_sorting(sort_shell, "Shell sort"),
-//	init_sorting(sort_heap, "Heap sort"),
-	init_sorting(sort_quick_recursive_random_start, "Qsort recursive random"),
-	init_sorting(sort_quick_recursive_rightmost_start, "Qsort recursive right"),
+	init_sorting(sort_heap, "Heap sort"),
+//	init_sorting(sort_quick_rightmost_recursive_wrapper, "Quicksort recursive - rightmost"),
+//	init_sorting(sort_quick_random_recursive_wrapper, "Quicksort recursive - random"),
+//	init_sorting(sort_quick_random_iterative_wrapper, "Quicksort iterative - random"),
+//	init_sorting(sort_quick_rightmost_iterative_wrapper, "Quicksort iterative - rightmost"),
+//	init_sorting(sort_quick_recursive_rightmost_start, "Qsort recursive right"),
 //	init_sorting(sort_quick_iterative_rightmost, "Qsort iterative right"),
 //	init_sorting(sort_quick_iterative_random, "Qsort iterative random")
      };
